@@ -1,0 +1,406 @@
+ <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥚 고등학교 3년 추억 기록장 🥚</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #ffeb99;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(255, 200, 0, 0.2);
+        }
+
+        .header h1 {
+            color: #ff8c42;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #d4a574;
+            font-size: 1.1em;
+        }
+
+        /* 계란후라이 이미지 */
+        .egg-image {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            background: radial-gradient(circle at 35% 35%, #ffeb3b, #ffd700);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(255, 200, 0, 0.3);
+        }
+
+        .egg-image::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            background: #fff8e7;
+            border-radius: 50%;
+            top: 25px;
+            left: 50px;
+        }
+
+        .egg-image::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50%;
+            top: 35px;
+            left: 60px;
+        }
+
+        /* 연도별 섹션 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .year-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ffeb99;
+            box-shadow: 0 3px 10px rgba(255, 200, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .year-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 200, 0, 0.25);
+        }
+
+        .year-title {
+            color: #ff8c42;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .year-title::before {
+            content: '📚';
+            font-size: 1.5em;
+        }
+
+        /* 입력 폼 */
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"],
+        textarea {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border: 2px solid #ffe082;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Arial', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ffeb99;
+            background: #fffbf0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #ffeb99 0%, #ffe082 100%);
+            border: none;
+            border-radius: 10px;
+            color: #ff8c42;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(255, 200, 0, 0.2);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 200, 0, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* 추억 목록 */
+        .memory-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .memory-item {
+            background: #fffbf0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ffeb99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .memory-item:hover {
+            background: #fff9e6;
+            box-shadow: 0 3px 10px rgba(255, 200, 0, 0.1);
+        }
+
+        .memory-content {
+            flex: 1;
+        }
+
+        .memory-title {
+            color: #ff8c42;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .memory-text {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .delete-btn {
+            background: #ffb3b3;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+            background: #ff8787;
+            transform: scale(1.05);
+        }
+
+        /* 빈 상태 메시지 */
+        .empty-message {
+            text-align: center;
+            color: #d4a574;
+            padding: 30px;
+            font-size: 1.1em;
+        }
+
+        /* 반응형 */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+
+            input[type="text"],
+            textarea {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <h1>🥚 고등학교 3년 추억 기록장 🥚</h1>
+        <div class="egg-image"></div>
+        <p>소중한 순간들을 기록해봐요!</p>
+    </div>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 1학년 -->
+        <div class="year-section">
+            <h2 class="year-title">1학년</h2>
+            <div class="input-section">
+                <input type="text" id="input1-title" placeholder="제목을 입력해봐요 (예: 첫 만남, 수학 시험)">
+                <textarea id="input1-content" placeholder="추억을 자세히 적어봐요! 💭"></textarea>
+                <button onclick="addMemory(1)">추가하기</button>
+            </div>
+            <div class="memory-list" id="memory-list-1">
+                <div class="empty-message">아직 추억이 없어요. 첫 번째 추억을 기록해봐요! 🌟</div>
+            </div>
+        </div>
+
+        <!-- 2학년 -->
+        <div class="year-section">
+            <h2 class="year-title">2학년</h2>
+            <div class="input-section">
+                <input type="text" id="input2-title" placeholder="제목을 입력해봐요">
+                <textarea id="input2-content" placeholder="추억을 자세히 적어봐요! 💭"></textarea>
+                <button onclick="addMemory(2)">추가하기</button>
+            </div>
+            <div class="memory-list" id="memory-list-2">
+                <div class="empty-message">아직 추억이 없어요. 첫 번째 추억을 기록해봐요! 🌟</div>
+            </div>
+        </div>
+
+        <!-- 3학년 -->
+        <div class="year-section">
+            <h2 class="year-title">3학년</h2>
+            <div class="input-section">
+                <input type="text" id="input3-title" placeholder="제목을 입력해봐요">
+                <textarea id="input3-content" placeholder="추억을 자세히 적어봐요! 💭"></textarea>
+                <button onclick="addMemory(3)">추가하기</button>
+            </div>
+            <div class="memory-list" id="memory-list-3">
+                <div class="empty-message">아직 추억이 없어요. 첫 번째 추억을 기록해봐요! 🌟</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 페이지 열릴 때 저장된 데이터 불러오기
+        window.addEventListener('load', function() {
+            loadAllMemories();
+        });
+
+        // 추억 추가 함수
+        function addMemory(year) {
+            // 입력값 가져오기
+            const titleInput = document.getElementById(`input${year}-title`);
+            const contentInput = document.getElementById(`input${year}-content`);
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+
+            // 입력값이 비어있으면 경고
+            if (!title || !content) {
+                alert('제목과 내용을 모두 입력해주세요! 📝');
+                return;
+            }
+
+            // 추억 객체 만들기
+            const memory = {
+                id: Date.now(),
+                title: title,
+                content: content,
+                date: new Date().toLocaleDateString('ko-KR')
+            };
+
+            // localStorage에 저장
+            let memories = JSON.parse(localStorage.getItem(`year${year}`) || '[]');
+            memories.push(memory);
+            localStorage.setItem(`year${year}`, JSON.stringify(memories));
+
+            // 입력칸 비우기
+            titleInput.value = '';
+            contentInput.value = '';
+
+            // 화면에 표시하기
+            displayMemories(year);
+        }
+
+        // 추억 삭제 함수
+        function deleteMemory(year, id) {
+            if (confirm('이 추억을 삭제할까요? 🤔')) {
+                let memories = JSON.parse(localStorage.getItem(`year${year}`) || '[]');
+                memories = memories.filter(m => m.id !== id);
+                localStorage.setItem(`year${year}`, JSON.stringify(memories));
+                displayMemories(year);
+            }
+        }
+
+        // 추억 표시 함수
+        function displayMemories(year) {
+            const listElement = document.getElementById(`memory-list-${year}`);
+            const memories = JSON.parse(localStorage.getItem(`year${year}`) || '[]');
+
+            // 리스트 비우기
+            listElement.innerHTML = '';
+
+            // 추억이 없으면 빈 메시지 표시
+            if (memories.length === 0) {
+                listElement.innerHTML = '<div class="empty-message">아직 추억이 없어요. 첫 번째 추억을 기록해봐요! 🌟</div>';
+                return;
+            }
+
+            // 각 추억을 화면에 표시
+            memories.forEach(memory => {
+                const item = document.createElement('div');
+                item.className = 'memory-item';
+                item.innerHTML = `
+                    <div class="memory-content">
+                        <div class="memory-title">✨ ${memory.title}</div>
+                        <div class="memory-text">${memory.content}</div>
+                        <small style="color: #bbb;">${memory.date}</small>
+                    </div>
+                    <button class="delete-btn" onclick="deleteMemory(${year}, ${memory.id})">삭제</button>
+                `;
+                listElement.appendChild(item);
+            });
+        }
+
+        // 모든 추억 불러오기
+        function loadAllMemories() {
+            for (let year = 1; year <= 3; year++) {
+                displayMemories(year);
+            }
+        }
+
+        // Enter 키로 추가하기
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let year = 1; year <= 3; year++) {
+                document.getElementById(`input${year}-content`).addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        addMemory(year);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
